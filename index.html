@@ -26,12 +26,7 @@
 
     body {
       font-family: 'Nunito', sans-serif;
-      background-color: var(--navy);
-      background-image: url('blue-wavy-background.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-color: #0a1628;
       min-height: 100vh;
       display: flex;
       align-items: flex-start;
@@ -59,17 +54,25 @@
       100% { background-position: 56px 56px; }
     }
 
-    .blob {
+    /* ── LISTRAS ANIMADAS ── */
+    .stripes-bg {
       position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
+      inset: 0;
+      overflow: hidden;
       pointer-events: none;
-      opacity: 0.25;
+      z-index: 0;
     }
-    .blob-1 { width: 500px; height: 400px; background: #0050a0; top: -100px; left: -120px; animation: floatA 12s ease-in-out infinite alternate; }
-    .blob-2 { width: 380px; height: 380px; background: #004f7c; bottom: -80px; right: -80px; animation: floatB 15s ease-in-out infinite alternate; }
-    @keyframes floatA { to { transform: translate(40px, 60px); } }
-    @keyframes floatB { to { transform: translate(-40px, -50px); } }
+    .stripe {
+      position: absolute;
+      border-radius: 2px;
+      transform-origin: left center;
+    }
+    @keyframes drift1 { 0%,100% { transform: rotate(-22deg) translateX(0px); } 50% { transform: rotate(-22deg) translateX(18px); } }
+    @keyframes drift2 { 0%,100% { transform: rotate(-16deg) translateX(0px); } 50% { transform: rotate(-16deg) translateX(-14px); } }
+    @keyframes drift3 { 0%,100% { transform: rotate(-30deg) translateX(0px); } 50% { transform: rotate(-30deg) translateX(22px); } }
+    @keyframes drift4 { 0%,100% { transform: rotate(-12deg) translateX(0px); } 50% { transform: rotate(-12deg) translateX(-10px); } }
+    @keyframes drift5 { 0%,100% { transform: rotate(-26deg) translateX(0px); } 50% { transform: rotate(-26deg) translateX(16px); } }
+    @keyframes drift6 { 0%,100% { transform: rotate(-20deg) translateX(0px); } 50% { transform: rotate(-20deg) translateX(-20px); } }
 
     .card {
       position: relative;
@@ -936,8 +939,7 @@
 </head>
 <body>
 
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
+  <div class="stripes-bg" id="stripes-bg"></div>
 
   <div class="card">
 
@@ -1652,6 +1654,47 @@
         }, 1000);
       }, 1600);
     }
+  </script>
+
+  <script>
+    // ── LISTRAS ANIMADAS ────────────────────────────────────────────────
+    (function() {
+      var container = document.getElementById('stripes-bg');
+      var stripes = [
+        { left:'-5vw',  top:'8vh',  width:'55vw', height:'1.5px', color:'#2060b0', opacity:0.50, anim:'drift1', dur:'7s'  },
+        { left:'10vw',  top:'14vh', width:'35vw', height:'1px',   color:'#1a4a90', opacity:0.35, anim:'drift2', dur:'9s'  },
+        { left:'-3vw',  top:'22vh', width:'60vw', height:'2px',   color:'#2870c0', opacity:0.45, anim:'drift3', dur:'6s'  },
+        { left:'45vw',  top:'10vh', width:'40vw', height:'1px',   color:'#1e55a0', opacity:0.30, anim:'drift1', dur:'11s' },
+        { left:'60vw',  top:'5vh',  width:'50vw', height:'1.5px', color:'#163870', opacity:0.40, anim:'drift4', dur:'8s'  },
+        { left:'-8vw',  top:'35vh', width:'65vw', height:'1.5px', color:'#163870', opacity:0.55, anim:'drift4', dur:'8s'  },
+        { left:'15vw',  top:'40vh', width:'28vw', height:'1px',   color:'#0e2850', opacity:0.40, anim:'drift5', dur:'10s' },
+        { left:'-2vw',  top:'47vh', width:'70vw', height:'2px',   color:'#1a3a6e', opacity:0.50, anim:'drift6', dur:'7.5s'},
+        { left:'55vw',  top:'38vh', width:'55vw', height:'1px',   color:'#163060', opacity:0.35, anim:'drift2', dur:'12s' },
+        { left:'-10vw', top:'58vh', width:'60vw', height:'1.5px', color:'#1e6090', opacity:0.40, anim:'drift3', dur:'9s'  },
+        { left:'25vw',  top:'63vh', width:'45vw', height:'1px',   color:'#1a5080', opacity:0.30, anim:'drift1', dur:'13s' },
+        { left:'-4vw',  top:'70vh', width:'72vw', height:'2px',   color:'#185888', opacity:0.45, anim:'drift5', dur:'8.5s'},
+        { left:'65vw',  top:'60vh', width:'45vw', height:'1px',   color:'#1e6090', opacity:0.30, anim:'drift4', dur:'11s' },
+        { left:'8vw',   top:'2vh',  width:'50vw', height:'1px',   color:'#2060b0', opacity:0.28, anim:'drift6', dur:'10s' },
+        { left:'-5vw',  top:'82vh', width:'62vw', height:'1.5px', color:'#1a3a6e', opacity:0.45, anim:'drift2', dur:'9s'  },
+        { left:'50vw',  top:'88vh', width:'55vw', height:'1px',   color:'#163870', opacity:0.30, anim:'drift3', dur:'14s' },
+        { left:'-1vw',  top:'1vh',  width:'30vw', height:'1.5px', color:'#1e4a8a', opacity:0.22, anim:'drift5', dur:'8s'  },
+        { left:'75vw',  top:'20vh', width:'40vw', height:'1px',   color:'#2870c0', opacity:0.32, anim:'drift1', dur:'7s'  },
+        { left:'70vw',  top:'75vh', width:'42vw', height:'2px',   color:'#1a4a90', opacity:0.38, anim:'drift4', dur:'12s' },
+        { left:'20vw',  top:'28vh', width:'22vw', height:'1px',   color:'#2060b0', opacity:0.18, anim:'drift2', dur:'15s' },
+        { left:'5vw',   top:'54vh', width:'15vw', height:'1px',   color:'#1e55a0', opacity:0.18, anim:'drift6', dur:'16s' },
+        { left:'82vw',  top:'50vh', width:'28vw', height:'1.5px', color:'#163870', opacity:0.28, anim:'drift3', dur:'10s' },
+      ];
+      stripes.forEach(function(s) {
+        var el = document.createElement('div');
+        el.className = 'stripe';
+        el.style.cssText = [
+          'left:'+s.left, 'top:'+s.top, 'width:'+s.width, 'height:'+s.height,
+          'background:'+s.color, 'opacity:'+s.opacity,
+          'animation:'+s.anim+' '+s.dur+' ease-in-out infinite',
+        ].join(';');
+        container.appendChild(el);
+      });
+    })();
   </script>
 </body>
 </html>
